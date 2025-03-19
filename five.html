@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #login-container, #dashboard-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #calendar {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+            min-height: 200px;
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Form -->
+    <div id="login-container">
+        <h2>Login</h2>
+        <form id="login-form">
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="password" id="password" placeholder="Enter your password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Dashboard (hidden initially) -->
+    <div id="dashboard-container" style="display: none;">
+        <h2>Welcome, <span id="user-name">User</span></h2>
+        <button id="logout">Logout</button>
+        <h3>Calendar</h3>
+        <div id="calendar"></div>
+        <h3>Upload Invoice</h3>
+        <input type="file" id="invoice-upload">
+        <button id="upload-invoice">Upload</button>
+        <div id="invoice-status"></div>
+    </div>
+
+    <script>
+        // Simulated User Data (For demo purposes)
+        let user = null;
+
+        // Handle login form submission
+        document.getElementById("login-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // For demo, assuming login is successful
+            user = { email: email, name: "John Doe" };
+
+            // Show Dashboard
+            document.getElementById("login-container").style.display = "none";
+            document.getElementById("dashboard-container").style.display = "block";
+
+            // Set user name
+            document.getElementById("user-name").textContent = user.name;
+        });
+
+        // Handle Logout
+        document.getElementById("logout").addEventListener("click", function () {
+            user = null;
+            document.getElementById("login-container").style.display = "block";
+            document.getElementById("dashboard-container").style.display = "none";
+        });
+
+        // Handle Invoice Upload
+        document.getElementById("upload-invoice").addEventListener("click", function () {
+            const file = document.getElementById("invoice-upload").files[0];
+            if (file) {
+                document.getElementById("invoice-status").textContent = `Invoice ${file.name} uploaded successfully!`;
+            } else {
+                document.getElementById("invoice-status").textContent = "Please select an invoice file.";
+            }
+        });
+
+        // Add Available Time Block to Calendar
+        function addAvailableTime() {
+            const calendar = document.getElementById("calendar");
+            const timeBlock = document.createElement("div");
+            timeBlock.textContent = "Available: " + new Date().toLocaleString();
+            timeBlock.style.padding = "5px";
+            timeBlock.style.backgroundColor = "#d4edda";
+            timeBlock.style.margin = "5px";
+            calendar.appendChild(timeBlock);
+        }
+
+        // Add a block of available time (example)
+        addAvailableTime();
+    </script>
+</body>
+</html>
